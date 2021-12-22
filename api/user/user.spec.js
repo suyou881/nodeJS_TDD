@@ -1,9 +1,20 @@
+// 테스트 코드
+
 const request = require('supertest');
 const should = require('should');
-const app = require('../src/index');
+const app = require('../../index');
+const models = require('../../models');
 
 describe('GET /users는', ()=>{
+    let users=[
+        {name:'alice'},
+        {name:'bek'},
+        {name:'chris'}
+    ];
+    before(()=>models.sequelize.sync({force:true}));
+    before(()=>models.User.bulkCreate(users));
     describe('성공시',()=>{
+        
         it('유저 객체를 담은 배열로 응답한다.',(done)=>{
             request(app) // supertest에 express 객체를 넘겨주고,
             .get('/users') // get users로 요청을 보낸다.
@@ -39,6 +50,13 @@ describe('GET /users는', ()=>{
 });
 
 describe('GET /users/:id은',()=>{
+    let users=[
+        {name:'alice'},
+        {name:'bek'},
+        {name:'chris'}
+    ];
+    before(()=>models.sequelize.sync({force:true}));
+    before(()=>models.User.bulkCreate(users));
     describe('성공시',()=>{
         it('id가 1인 유저 객체를 반환한다.',(done)=>{
             request(app)
@@ -67,6 +85,13 @@ describe('GET /users/:id은',()=>{
 });
 
 describe('GET /users/:id',()=>{
+    let users=[
+        {name:'alice'},
+        {name:'bek'},
+        {name:'chris'}
+    ];
+    before(()=>models.sequelize.sync({force:true}));
+    before(()=>models.User.bulkCreate(users));
     describe('성공시', ()=>{
         it('204를 응답한다.', (done)=>{
             request(app)
@@ -86,15 +111,23 @@ describe('GET /users/:id',()=>{
 });
 
 describe('POST /users',()=>{
+    let users=[
+        {name:'alice'},
+        {name:'bek'},
+        {name:'chris'}
+    ];
+    before(()=>models.sequelize.sync({force:true}));
+    before(()=>models.User.bulkCreate(users));
     describe('성공시', ()=>{
-        let name = 'daniel';
-        let body;
+        let name = 'daniel', body;
         before(done=>{
             request(app)
             .post('/users')
             .send({name})
             .expect(201)
             .end((err,res)=>{
+                console.log(res.body);
+                console.log(err);
                 body = res.body;
                 done();
             });
@@ -125,6 +158,13 @@ describe('POST /users',()=>{
 });
 
 describe('PUT /users/:id',()=>{
+    let users=[
+        {name:'alice'},
+        {name:'bek'},
+        {name:'chris'}
+    ];
+    before(()=>models.sequelize.sync({force:true}));
+    before(()=>models.User.bulkCreate(users));
     describe('성공시', ()=>{
         let name = 'chally';
         it('변경된 name을 응답한다.', (done)=>{

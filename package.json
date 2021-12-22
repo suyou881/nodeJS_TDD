@@ -6,6 +6,11 @@
     "express": "^4.17.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "postgres": "^1.0.2",
+    "sequelize": "^6.12.1",
+    "sequelize-cli": "^6.3.0",
     "supertest": "^6.1.6"
   },
   "devDependencies": {
@@ -13,9 +18,9 @@
     "should": "^13.2.3"
   },
   "scripts": {
-    "test_util": "mocha test/util.spec.js",
-    "test_index": "mocha test/index.spec.js",
-    "start": "node src/index.js",
-    "start:dev": "nodemon src/index.js"
+    "test_util": "mocha util.spec.js",
+    "test": "NODE_ENV=test mocha api/user/user.spec.js -w",
+    "start": "node bin/www.js",
+    "start:dev": "nodemon index.js"
   }
 }
